@@ -3,7 +3,6 @@ let currentRoom = 'General';
 let username = document.getElementById('username').textContent;
 let roomMessages = {};
 
-// Socket event listeners
 socket.on('connect', () => {
 	if (!currentRoom) currentRoom = 'General';
 	joinRoom(currentRoom);
@@ -39,7 +38,6 @@ socket.on('active_users', (data) => {
 		.join('');
 });
 
-// Message handling
 function addMessage(sender, message, type) {
 	if (!roomMessages[currentRoom]) {
 		roomMessages[currentRoom] = [];
@@ -62,7 +60,6 @@ function sendMessage() {
 	if (!message) return;
 
 	if (message.startsWith('@')) {
-		// Send private message
 		const [target, ...msgParts] = message.substring(1).split(' ');
 		const privateMsg = msgParts.join(' ');
 
@@ -92,7 +89,6 @@ function joinRoom(room) {
 
 	highlightActiveRoom(room);
 
-	// Show room history
 	const chat = document.getElementById('chat');
 	chat.innerHTML = '';
 
@@ -115,7 +111,6 @@ function handleKeyPress(event) {
 	}
 }
 
-// Initialize chat when page loads
 let chat;
 document.addEventListener('DOMContentLoaded', () => {
 	if ('Notification' in window) {
@@ -123,7 +118,6 @@ document.addEventListener('DOMContentLoaded', () => {
 	}
 });
 
-// Add this new function to handle room highlighting
 function highlightActiveRoom(room) {
 	document.querySelectorAll('.room-item').forEach((item) => {
 		item.classList.remove('active-room');
